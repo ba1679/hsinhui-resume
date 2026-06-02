@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>賴欣慧 LAI, HSIN HUI | Frontend Engineer Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae2fd',
+                            300: '#7ccafd',
+                            400: '#38b0f8',
+                            500: '#0ea4e9',
+                            600: '#0285c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            950: '#082f49',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+        }
+        
+        /* 極致優化的 PDF/列印 專屬樣式表
+           相容 Google Chrome, Safari, Edge 與 Firefox 匯出 PDF 機制 
+        */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 1.8cm 1.6cm 1.8cm 1.6cm; /* 標準高雅 A4 邊距 */
+            }
+
+            /* 強制隱藏所有網頁版功能元件 */
+            .no-print, 
+            nav, 
+            button, 
+            #settings-modal, 
+            #toast,
+            .external-icon {
+                display: none !important;
+            }
+
+            /* 全域重置：強制亮色底、暗色字，並確保背景圖形正確印出 */
+            html, body {
+                background: #ffffff !important;
+                color: #1e293b !important; /* slate-800 */
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            /* 移除外層卡片樣式與陰影，防範在紙上留白邊框 */
+            main {
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .print-container {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                background: transparent !important;
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+
+            /* 頁首優化：確保高對比度 */
+            header {
+                padding-bottom: 1.5rem !important;
+                border-bottom: 2px solid #e2e8f0 !important;
+                margin-bottom: 1.5rem !important;
+            }
+
+            h1 {
+                color: #0f172a !important; /* slate-900 */
+                font-size: 24pt !important;
+                line-height: 1.2 !important;
+            }
+
+            h2 {
+                font-size: 11pt !important;
+                color: #0369a1 !important; /* brand-700 經典海軍藍 */
+                margin-bottom: 0.75rem !important;
+                border: none !important;
+                padding: 0 !important;
+            }
+
+            p, li {
+                font-size: 10pt !important;
+                line-height: 1.6 !important;
+                color: #334155 !important; /* slate-700 */
+                text-align: justify !important;
+            }
+
+            /* 聯絡資訊重排：乾淨的並排或直排 */
+            .contact-info {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-end !important;
+                gap: 0.35rem !important;
+            }
+
+            /* 技能區塊優化：雙欄完美網格排版 */
+            .skills-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 0.75rem !important;
+            }
+
+            .skills-card {
+                background-color: #f8fafc !important; /* slate-50 微灰背景增加層次 */
+                border: 1px solid #e2e8f0 !important;
+                padding: 0.75rem !important;
+                border-radius: 0.5rem !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+            }
+
+            .skills-card h3 {
+                font-size: 9.5pt !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+                margin-bottom: 0.35rem !important;
+            }
+
+            .skill-badge {
+                background-color: #ffffff !important;
+                color: #334155 !important;
+                border: 1px solid #cbd5e1 !important;
+                font-size: 8pt !important;
+                padding: 0.1rem 0.4rem !important;
+                border-radius: 0.25rem !important;
+                box-shadow: none !important;
+            }
+
+            /* 工作經歷優化：關閉網頁端的時間軸裝飾，採最乾淨利落的單欄對齊 */
+            .timeline-container {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .timeline-container::before {
+                display: none !important;
+            }
+
+            .work-item {
+                padding-left: 0 !important; /* 釋放原本時間軸小圓點佔用的左側空間 */
+                margin-bottom: 1.5rem !important;
+                page-break-inside: avoid; /* 防範單個工作經歷被腰斬斷頁 */
+            }
+
+            .work-item-bullet {
+                display: none !important;
+            }
+
+            .work-header {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: flex-start !important;
+            }
+
+            .work-title {
+                font-size: 11pt !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+            }
+
+            .work-meta {
+                font-size: 9.5pt !important;
+                color: #475569 !important; /* slate-600 */
+                background: transparent !important;
+                padding: 0 !important;
+            }
+
+            /* 防範所有大標題、區塊被孤立在頁面最底部 */
+            h1, h2, h3, h4, section {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col justify-center selection:bg-brand-500 selection:text-white py-6 sm:py-12">
+
+    <!-- Toast Notification (Still useful for Copied Email Feedback) -->
+    <div id="toast" class="no-print fixed bottom-5 right-5 z-50 transform translate-y-10 opacity-0 transition-all duration-300 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-4 py-2.5 rounded-xl shadow-lg text-sm font-medium flex items-center gap-2">
+        <i data-lucide="check-circle" class="h-4 w-4 text-emerald-500 dark:text-emerald-600"></i>
+        <span id="toast-message">已複製到剪貼簿</span>
+    </div>
+
+    <!-- Main Content Container (Margins and padding centered for portfolio presentation) -->
+    <main class="flex-grow max-w-4xl w-full mx-auto p-4 sm:p-8">
+        <!-- Paper/Card Container representing the Resume Sheet -->
+        <article class="print-container bg-white dark:bg-slate-900 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/60 dark:border-slate-800/80 p-6 sm:p-10 md:p-12 transition-all">
+            
+            <!-- Resume Header Section -->
+            <header class="border-b border-slate-100 dark:border-slate-800 pb-8">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-6">
+                    <div>
+                        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+                            賴欣慧 <span class="text-lg sm:text-xl font-medium text-slate-400 dark:text-slate-500 ml-1">(LAI, HSIN HUI)</span>
+                        </h1>
+                        <p class="text-lg font-semibold text-brand-600 dark:text-brand-400 mt-2 tracking-wide uppercase">
+                            前端工程師 (Frontend Engineer)
+                        </p>
+                    </div>
+                    
+                    <!-- Contact details -->
+                    <div class="contact-info flex flex-wrap md:flex-col gap-3 md:items-end text-sm text-slate-600 dark:text-slate-300">
+                        <!-- Email Link with Copy Feature -->
+                        <button onclick="copyEmail()" class="group flex items-center gap-2 hover:text-brand-600 dark:hover:text-brand-400 transition-colors" title="點擊複製信箱">
+                            <i data-lucide="mail" class="h-4 w-4 text-slate-400 dark:text-slate-500 group-hover:text-brand-500 transition-colors"></i>
+                            <span>shinhuei1@gmail.com</span>
+                            <i data-lucide="copy" class="h-3 w-3 opacity-0 group-hover:opacity-100 text-slate-400 transition-opacity no-print"></i>
+                        </button>
+                        
+                        <!-- Medium -->
+                        <a href="https://medium.com/@shinhuei1" id="medium-link" target="_blank" class="flex items-center gap-2 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">
+                            <i data-lucide="book-open" class="h-4 w-4 text-slate-400 dark:text-slate-500"></i>
+                            <span>Medium 專欄</span>
+                            <i data-lucide="external-link" class="external-icon h-3 w-3 text-slate-300 dark:text-slate-600 no-print"></i>
+                        </a>
+
+                        <!-- GitHub -->
+                        <a href="https://github.com/shinhuei1" id="github-link" target="_blank" class="flex items-center gap-2 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">
+                            <i data-lucide="github" class="h-4 w-4 text-slate-400 dark:text-slate-500"></i>
+                            <span>GitHub</span>
+                            <i data-lucide="external-link" class="external-icon h-3 w-3 text-slate-300 dark:text-slate-600 no-print"></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Professional Summary -->
+            <section class="mt-8">
+                <h2 class="text-sm font-bold tracking-widest text-brand-600 dark:text-brand-400 uppercase flex items-center gap-2 mb-4">
+                    <i data-lucide="user" class="h-4 w-4 no-print"></i> 專業總結 (Professional Summary)
+                </h2>
+                <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-sm sm:text-[15px] text-justify">
+                    擁有 4 年以上經驗的前端工程師，專精於 React、Next.js 效能優化與跨平台架構設計。具備大型全球化產品研發經驗，曾於 AlfredCamera 透過 WebRTC 技術落地降低 40% 雲端營運成本，並於 ViewSonic 成功推動 AI 輔助開發與流程自動化，大幅提升團隊協作效率。擅長將複雜的技術實作轉化為實際商業價值，兼顧程式碼高可維護性與優良的使用者體驗。
+                </p>
+            </section>
+
+            <!-- Technical Skills Section -->
+            <section class="mt-8 border-t border-slate-100 dark:border-slate-800/80 pt-8">
+                <h2 class="text-sm font-bold tracking-widest text-brand-600 dark:text-brand-400 uppercase flex items-center gap-2 mb-5">
+                    <i data-lucide="code" class="h-4 w-4 no-print"></i> 核心技術 (Technical Skills)
+                </h2>
+                
+                <div class="skills-grid grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Category 1 -->
+                    <div class="skills-card p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/50">
+                        <h3 class="text-sm font-bold text-slate-950 dark:text-white mb-2">程式語言與核心技術</h3>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">React / React Hooks</span>
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">Next.js</span>
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">TypeScript</span>
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">Vue 2 / Vuetify</span>
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">Three.js</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Category 2 -->
+                    <div class="skills-card p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/50">
+                        <h3 class="text-sm font-bold text-slate-950 dark:text-white mb-2">狀態與資料管理</h3>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">Redux / Zustand</span>
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">Tanstack Query / RTK Query</span>
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">WebRTC (Data Channel)</span>
+                        </div>
+                    </div>
+
+                    <!-- Category 3 -->
+                    <div class="skills-card p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/50">
+                        <h3 class="text-sm font-bold text-slate-950 dark:text-white mb-2">樣式與使用者介面</h3>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">Tailwind CSS</span>
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">Material UI</span>
+                        </div>
+                    </div>
+
+                    <!-- Category 4 & 5 -->
+                    <div class="skills-card p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/50">
+                        <h3 class="text-sm font-bold text-slate-950 dark:text-white mb-2">部署工具與數據分析</h3>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">Git / Git flow / GitHub</span>
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">GitHub Actions</span>
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">AWS 雲端服務</span>
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">GA4 / GTM / Amplitude</span>
+                            <span class="skill-badge px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">Firebase</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Work Experience Section -->
+            <section class="mt-8 border-t border-slate-100 dark:border-slate-800/80 pt-8">
+                <h2 class="text-sm font-bold tracking-widest text-brand-600 dark:text-brand-400 uppercase flex items-center gap-2 mb-6">
+                    <i data-lucide="briefcase" class="h-4 w-4 no-print"></i> 工作經歷 (Work Experience)
+                </h2>
+                
+                <div class="timeline-container space-y-8 relative before:absolute before:inset-0 before:left-3.5 before:w-0.5 before:bg-slate-100 dark:before:bg-slate-800/60">
+                    
+                    <!-- ViewSonic -->
+                    <div class="work-item relative pl-8 group">
+                        <!-- Timeline bullet -->
+                        <div class="work-item-bullet absolute left-1 top-1.5 h-5 w-5 rounded-full bg-brand-50 dark:bg-slate-900 border-2 border-brand-500 flex items-center justify-center transition-all group-hover:scale-110">
+                            <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+                        </div>
+                        
+                        <div class="work-header flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1">
+                            <div>
+                                <h3 class="work-title text-base font-bold text-slate-950 dark:text-white flex items-center gap-2">
+                                    ViewSonic 
+                                    <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-medium no-print">最新任職</span>
+                                </h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">前端工程師 (Frontend Engineer)</p>
+                            </div>
+                            <span class="work-meta text-xs sm:text-sm font-semibold text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800 px-2.5 py-1 rounded-md">
+                                2024.11 – 至今 (Present)
+                            </span>
+                        </div>
+                        <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300 text-sm list-disc pl-4 leading-relaxed">
+                            <li>設計並推動 AI 輔助開發流程與內部自動化工具（包含 PR 與發版自動化機制），建立團隊技術知識庫，使團隊採用率達 60% 並將多項工程流程耗時平均降低 80%</li>
+                            <li>建立需求前置分析與技術風險評估流程，協助團隊於開發前期識別需求缺口與架構風險，有效降低中後期跨部門溝通與重構成本</li>
+                            <li>制定前端開發規範與 Code Review 檢查機制，提升團隊程式碼品質、一致性與系統長期可維護性</li>
+                            <li>主導跨平台 WebView 整合方案，實現 macOS、Windows 與 Android 共用核心功能模組，大幅降低平台間重複開發成本</li>
+                            <li>重構核心功能模組以降低系統耦合度，提升程式碼可維護性與擴充能力</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- AlfredCamera -->
+                    <div class="work-item relative pl-8 group">
+                        <!-- Timeline bullet -->
+                        <div class="work-item-bullet absolute left-1 top-1.5 h-5 w-5 rounded-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 flex items-center justify-center transition-all group-hover:border-brand-500"></div>
+                        
+                        <div class="work-header flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1">
+                            <div>
+                                <h3 class="work-title text-base font-bold text-slate-950 dark:text-white">AlfredCamera</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">前端工程師 (Frontend Engineer)</p>
+                            </div>
+                            <span class="work-meta text-xs sm:text-sm font-semibold text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800 px-2.5 py-1 rounded-md">
+                                2022.11 – 2024.10
+                            </span>
+                        </div>
+                        
+                        <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300 text-sm list-disc pl-4 leading-relaxed">
+                            <li>主導官方網站遷移至 Next.js，維持 SEO 排名並將 Core Web Vitals 提升至 90+ 分</li>
+                            <li>設計並實作 WebRTC Data Channel 傳輸方案，取代既有雲端儲存架構，降低約 40% 基礎設施成本</li>
+                            <li>建立 GitHub Actions 自動化部署流程，降低人工操作風險並提升發布效率</li>
+                            <li>開發跨部門產品功能並持續優化使用者體驗與系統效能</li>
+                        </ul>
+                    </div>
+
+                    <!-- iStaging -->
+                    <div class="work-item relative pl-8 group">
+                        <!-- Timeline bullet -->
+                        <div class="work-item-bullet absolute left-1 top-1.5 h-5 w-5 rounded-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 flex items-center justify-center transition-all group-hover:border-brand-500"></div>
+                        
+                        <div class="work-header flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1">
+                            <div>
+                                <h3 class="work-title text-base font-bold text-slate-950 dark:text-white">iStaging</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">前端工程師 (Frontend Engineer)</p>
+                            </div>
+                            <span class="work-meta text-xs sm:text-sm font-semibold text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800 px-2.5 py-1 rounded-md">
+                                2022.01 – 2022.10
+                            </span>
+                        </div>
+                        
+                        <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300 text-sm list-disc pl-4 leading-relaxed">
+                            <li>使用 Next.js 建置官方網站並完成 SEO 與 GA4 追蹤規劃</li>
+                            <li>開發 Dashboard 與 VR 相關功能，運用 Three.js 提升互動體驗</li>
+                            <li>建立 CI/CD 流程並整合 AWS 雲端服務，提升開發效率</li>
+                        </ul>
+                    </div>
+
+                    <!-- Cyuan You Computer -->
+                    <div class="work-item relative pl-8 group">
+                        <!-- Timeline bullet -->
+                        <div class="work-item-bullet absolute left-1 top-1.5 h-5 w-5 rounded-full bg-slate-50 dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 flex items-center justify-center transition-all group-hover:border-brand-500"></div>
+                        
+                        <div class="work-header flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1">
+                            <div>
+                                <h3 class="work-title text-base font-bold text-slate-950 dark:text-white">全佑電腦</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">前端工程師 (Frontend Engineer)</p>
+                            </div>
+                            <span class="work-meta text-xs sm:text-sm font-semibold text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800 px-2.5 py-1 rounded-md">
+                                2021.06 – 2021.11
+                            </span>
+                        </div>
+                        
+                        <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300 text-sm list-disc pl-4 leading-relaxed">
+                            <li>使用 Vue 2 與 Vuetify 開商平台、商家後台及企業管理系統，支援產品快速迭代與功能開發</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section class="mt-8 border-t border-slate-100 dark:border-slate-800/80 pt-8">
+                <h2 class="text-sm font-bold tracking-widest text-brand-600 dark:text-brand-400 uppercase flex items-center gap-2 mb-4">
+                    <i data-lucide="graduation-cap" class="h-4 w-4 no-print"></i> 學歷 (Education)
+                </h2>
+                
+                <div class="work-header flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1">
+                    <div>
+                        <h3 class="work-title text-base font-bold text-slate-950 dark:text-white">
+                            國立雲林科技大學
+                        </h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">
+                            企業管理學系 Business Administration
+                        </p>
+                    </div>
+                    <span class="work-meta text-xs sm:text-sm font-semibold text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800 px-2.5 py-1 rounded-md">
+                        2015 – 2017
+                    </span>
+                </div>
+            </section>
+
+        </article>
+    </main>
+
+    <!-- Logic & Custom Interactivity -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+            
+            toast.classList.remove('translate-y-10', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-10', 'opacity-0');
+            }, 3000);
+        }
+
+        // Email Copy Functionality
+        function copyEmail() {
+            const emailText = "shinhuei1@gmail.com";
+            
+            // Native clipboard fallback for iframe context (document.execCommand)
+            const tempInput = document.createElement("input");
+            tempInput.value = emailText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast("信箱已成功複製至剪貼簿！");
+                } else {
+                    showToast("複製失敗，請手動複製信箱。");
+                }
+            } catch (err) {
+                showToast("複製出錯，請手動複製。");
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        // Detect system theme preference for initial loading
+        const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const storedTheme = localStorage.getItem('theme');
+        
+        if (storedTheme === 'dark' || (!storedTheme && isSystemDark)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</body>
+</html>
